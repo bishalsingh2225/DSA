@@ -1,0 +1,684 @@
+================================================= Calculating trailing zeros in factorial of any number
+// C++ program to count
+// trailing 0s in n!
+#include <iostream>
+using namespace std;
+
+// Function to return trailing
+// 0s in factorial of n
+int findTrailingZeros(int n)
+{
+	if (n < 0) // Negative Number Edge Case
+		return -1;
+
+	// Initialize result
+	int count = 0;
+
+	// Keep dividing n by powers of
+	// 5 and update count
+	for (int i = 5; n / i >= 1; i *= 5)
+		count += n / i;
+
+	return count;
+}
+
+// Driver Code
+int main()
+{
+	int n = 100;
+	cout << "Count of trailing 0s in " << 100 << "! is "
+		<< findTrailingZeros(n);
+	return 0;
+}
+>>>>>>>>>>>>>>>>>>>>>..
+
+
+
+================================================= GCD or HCF of two numbers
+
+For two fractions,
+HCF = HCF (Numerators) / LCM (Denominators)
+LCM = LCM (Numerators) / HCF (Denominators)
+
+-------------------( my code <this can be best done through reccursion>)
+#include<iostream> 
+ using namespace std; 
+ int gcd(int a, int b){ 
+     int rem1,temp = a%b; 
+     if(temp == 0){ 
+      return b;    
+     }
+     while(a%b != 0){ 
+         rem1 = a%b;
+       a = b;
+        b = rem1;
+    } 
+     return rem1; 
+ } 
+ 
+int main(){ 
+     int n1 = 540,n2 = 200; 
+     int a = min(n1,n2),b = max(n1,n2); 
+     cout<< gcd(a,b); 
+     return 0; 
+ } 
+
+------------------ (Naiv solution)
+
+int gcd(int a, int b){
+	int res = min(a,b);
+	while (res >0){
+	if(a%res == 0 && b%res ==0){
+		break;
+	}
+	res--;
+	}
+	return res;
+}
+>>>>>>>>>>>
+O(min(a,b))
+
+----------------- (Euclidean algorithm)
+#include<iostream>
+using namespace std;
+int gcd(int a, int b){
+    while(a != b){
+        if(a>b){
+            a-=b;
+        }else{
+            b-=a;
+        }
+    }
+    return a;
+}
+int main(){
+    int a = 13,b = 7;
+    cout<< gcd(a,b);
+    return 0;
+}
+
+>>>>>>>>>>>
+OR
+>>>>>>>>>>>
+
+//Greatest common divisor using euclidean algorithm
+#include<bits/stdc++.h>
+using namespace std;
+int gcd(int a, int b){
+    while(a > 0){
+        a -= b;
+    }
+    return a+b;
+}
+int main(){
+    int a, b;
+    cin >> a;
+    cin >> b;
+    int m = max(a,b);
+    int n = min(a, b);
+    cout<< gcd(m,n);
+    return 0;
+}
+
+
+--------------------(Optimized euclidean algorithm <simmilar to my code but with reccursion>)
+#include<iostream>
+using namespace std;
+int gcd(int a, int b){
+    if(b == 0){
+        return a;
+    }
+    return gcd(b,a%b);
+}
+int main(){
+    int a = 13,b = 7;
+    cout<< gcd(a,b);
+    return 0;
+}
+>>>>>>>>>
+O(log(min(a,b)))
+
+==============================================(LCM of two numbers)  formula: LCM = a*b/HCF
+--------------------------------------//method one <efficient solution>
+#include<iostream>
+using namespace std;
+int gcd(int a, int b){
+    if(b == 0){
+        return a;
+    }
+    return gcd(b,a%b);
+}
+int main(){
+    int a = 4,b = 6;
+    int hcf = gcd(a,b);
+    cout<<(a*b)/hcf;
+    return 0;
+}
+>>>>>>>>>
+O(log(min(a,b)))
+-----------------------------------(Naiv solution)
+//naiv solution
+#include<iostream>
+using namespace std;
+int lcm(int a, int b){
+    int res = max(a,b);
+    while(true){
+        if(res%a ==0 && res%b ==0){
+            return res;
+        }
+        res++;
+    }
+}
+int main(){
+    int a = 4,b = 6;
+    cout<<lcm(a,b);
+    return 0;
+}
+>>>>>>>>>>>>>
+O(a*b-max(a,b))
+
+=========================================================(Check for prime)
+* 2 is only even prime number 
+* 1 is nor prime nor compositive
+
+------------------------------------------//naiv solution
+#include<iostream>
+using namespace std;
+int isprime(int n){
+    int count = n-1;
+    while(count>=2){
+        if(n%count == 0){
+            return false;
+        }
+        count--;
+    }
+    return true;
+}
+int main(){
+    int n = 1;
+    cout<<isprime(n);
+    return 0;
+}
+>>>>>>>>>>>>>>>
+O(n) and if we do count = n/2 the time complexity can be O(n/2)
+--------------------------------------------------(Efficient method)
+divisions always appear in pair
+#include<iostream>
+using namespace std;
+int isprime(int n){
+    if(n==1)
+        return false;
+    for(int i = 2; i*i<=n; i++){
+        if(n%i == 0) return false;
+    }
+    return true;
+}
+int main(){
+    int n = 25;
+    cout<<isprime(n);
+    return 0;
+}
+>>>>>>>>>>
+O(sqrt(n))
+----------------------------------------------------- (more efficient method)
+#include<iostream>
+using namespace std;
+bool isPrime(int n){
+    if(n == 1){
+        cout<<"nor prime nor composite";
+        return NULL;
+    }
+    if(n == 2 || n == 3) return true;
+    if(n%2==0 || n%3==0) return false;
+    for(int i = 5; i*i <=n; i+=6){
+        if(n%i == 0 || n%(i+2)==0){
+            return false;
+        }
+    }
+    return true;
+}
+int main(){
+    int n = 255;
+    cout<<isPrime(n);
+    return 0;
+
+}
+>>>>>>>>>>
+it's time complexity is one third of the previous methods
+================================================(Prime Factors)
+--------------------------------------------------------> Naiv method
+//naiv solution for prime factor
+#include<iostream>
+using namespace std;
+bool isPrime(int n){
+    if(n == 1){
+        cout<<"nor prime nor composite";
+        return NULL;
+    }
+    if(n == 2 || n == 3) return true;
+    if(n%2==0 || n%3==0) return false;
+    for(int i = 5; i*i <=n; i+=6){
+        if(n%i == 0 || n%(i+2)==0){
+            return false;
+        }
+    }
+    return true;
+}
+void primeFactors(int n){
+    for(int i = 2; i< n; i++){
+        if(isPrime(i)){
+            int xd = i;
+            while(n%xd == 0){
+                cout<<i;
+                xd*=i;
+            }
+        }
+    }
+}
+int main(){
+    int n = 8896;
+    primeFactors(n);
+    return 0;
+}
+>>>>>>>>>>>
+O(n^2 logn)
+---------------------------------------------------(efficient solution)
+#include<iostream>
+using namespace std;
+void primeFactors(int n){
+    for(int i = 2; i*i<= n; i++){ // implementing the first efficiency condition
+            while(n% i == 0){     //implementing the second efficiency condition
+                cout<<i<<" ";
+                n/=i;
+            }
+        }
+if(n>1){
+    cout<<n;
+}
+}
+int main(){
+    int n = 8896;
+    primeFactors(n);
+    return 0;
+}
+---------------------------------------------------(most efficient case) <combining the code of prime numbers and above pt number 2> 
+#include <iostream>
+#include <limits.h>
+using namespace std;
+
+ void printPrimeFactors(int n)
+{
+    if(n <= 1)
+        return;
+
+    while(n % 2 == 0)
+    {
+        cout<<2<<" ";
+
+        n = n / 2;
+    }
+
+    while(n % 3 == 0)
+    {
+        cout<<3<<" ";
+
+        n = n / 3;
+    }
+
+    for(int i=5; i*i<=n; i=i+6)
+    {
+        while(n % i == 0)
+        {
+            cout<<i<<" ";
+
+            n = n / i;
+        }
+
+        while(n % (i + 2) == 0)
+        {
+            cout<<(i + 2)<<" ";
+
+            n = n / (i + 2);
+        }
+    }
+
+    if(n > 3)
+        cout<<n<<" ";
+
+    cout<<endl;
+}
+
+int main() {
+    
+        int n = 8896;
+        
+        printPrimeFactors(n);
+        
+        return 0;
+}
+>>>>>>>>>>>>
+theta(sqrt(n))          in case of prime number
+
+==============================================(All divisors of a number )
+----------------------------------------//naiv solution
+#include <iostream>
+using namespace std;
+void printDivisors(int n){
+    for(int i = 1; i<=n;i++){                  //here we can also use i<=n/2
+        if(n%i==0){
+            cout<<i<<" ";
+        }
+    }
+}
+int main(){
+    int n = 20;
+    printDivisors(n);
+    return 0;
+}
+>>>>>>>>>>
+theta(n) and theta(1) aux space
+---------------------------------------// efficient solution <but it doesn't print in sorted order
+#include <iostream>
+using namespace std;
+void printDivisors(int n){
+    for(int i = 1; i*i<= n;i++){
+        if(n%i==0){
+            cout<<i<<" ";
+            if(i != n/i)  cout<<n/i<<" ";    //for preventing printing twice same number in case of perfect numbers 
+        }
+    }
+}
+int main(){
+    int n = 25;
+    printDivisors(n);
+    return 0;
+} 
+>>>>>>>>>>>
+theta(sqrt(n)) and theta(1) of aux space
+--------------------------------------// efficient solution <recursive solution> PRINTS IN SORTED ORDER 
+#include<iostream>
+using namespace std;
+int printDivisors(int n, int i){
+    if(i*i>n){
+        return 0;
+    }
+    if(n % i == 0){
+        cout << i << " ";
+        printDivisors(n, i + 1);
+        if(i != n/i){
+        cout << n / i << " ";
+        }
+    }else{
+        printDivisors(n, i + 1);
+    }
+}
+int main(){
+    int n = 25;
+    printDivisors(n,1);
+    return 0;
+}
+}
+>>>>>>>>>>.
+Theta(sqrt(n)) time complexity  and theta(sqrt(n)) of space complexity and theta(1) of aux space complexity.
+---------------------------------------// efficient solution <ITTERATIVE SOLUTON> prints the divisors in sorted order 
+#include <iostream>
+#include <limits.h>
+using namespace std;
+
+ void printDivisors(int n)
+{
+    int i = 1;
+    for(i=1; i*i < n; i++)
+    {
+        if(n % i == 0)
+        {
+            cout<<i<<" ";
+        }
+    }
+
+    for(; i >= 1; i--)
+    {
+        if(n % i == 0)
+        {
+            cout<<(n / i)<<" ";
+        }
+    }
+}
+
+int main() {
+    
+        int n = 15;
+        
+        printDivisors(n);
+        
+        return 0;
+}
+>>>>>>>>>>>>>>>>>>>
+2 * theta(sqrt n)  which is theta(sqrt(n)) and theta(1) unit of aux space
+
+===============================================================( sieve of eratosthenes)
+//used for finding all the prime numbers smaller of equal to n;
+
+
+--------------------------------------------------// efficient sloution 
+//i have initialized the array as false but in stieve of eratosthenes it's true by default (opposite of this code)
+#include<iostream>
+using namespace std;
+void printPrimes(int n){
+    bool arr[n+1] = {}; 
+    for(int i=2; i*i<=n; i++){
+        if (arr[i] == false){
+            for(int j = i*2;j<=n;j+=i){    //here j is initialized with i*2 increased efficiency and j+=i for only //checking at multiples of j <for more efficiency we can initialize it with i*i>
+                arr[j] = true;
+            }
+        }
+    }
+
+    for(int i = 2; i<=n;i++){
+        if(arr[i] == false){
+            cout<<i<<" ";
+        }
+    }
+}
+int main()
+{
+    int n = 20;
+    printPrimes(n);
+    
+    return 0;
+}
+>>>>>>>>>>>>>>>>>>
+
+---------------------------------------------// more efficient code  <here isPrime is the array not the isPrime function which you made before :)>
+#include <iostream>
+#include <limits.h>
+using namespace std;
+
+ void sieve(int n)
+{
+    if(n <= 1)
+        return;
+
+    bool isPrime[n+1];
+
+    fill(isPrime, isPrime + n + 1, true);
+
+    for(int i = 2; i<=n; i++)
+    {
+        if(isPrime[i])
+        {
+            cout<<i<<" ";
+            for(int j = i*i; j <= n; j = j+i)
+            {
+                isPrime[j] = false;
+            }
+        }
+    }
+}
+int main() {
+    
+        int n = 18;
+        sieve(n);
+}
+
+>>>>>>>>>>>>>>>>>
+O(n log log n) equivalent to O(n)
+
+==================================================================(computing power) using reccursive solution <check the efficient code>
+
+---------------------------------------------//naive solution
+#include<iostream>
+using namespace std;
+void printPow(int x, int n){
+    int output = 1;
+    for(int i = 0; i< n ; i++){
+        output*=x;
+    }
+    cout<<output;
+}
+int main(){
+    int n = 2,x = 3;
+    printPow(x,n);
+    return 0;
+}
+>>>>>>>>>>>>>>>>
+theta(n)
+----------------------------------------------// my code
+#include<iostream>
+using namespace std;
+void printPow(int x, int n){
+    if(n %2 == 0){
+        int output = 1;
+        int temp  = n/2;
+        for(int i = 0; i< temp; i++){
+            output*=x;
+        }
+        output*=output;
+        cout<<output;
+    }else{
+        int output = 1;
+        int temp = (n-1)/2;                        
+        for(int i = 0; i< temp; i++){
+            output*=x;                                 
+        }
+        output*=output;
+        output*=x;
+        cout<<output;
+    }
+}
+int main(){
+    int n = 8,x = 2;
+    printPow(x,n);
+    return 0;
+}
+>>>>>>>>>>>>>>
+tc = theta(n/2); AS = theta(1)
+---------------------------------------------// efficient solution (recursive solution)
+#include<iostream>
+using namespace std;
+int printPower(int x, int n){
+    if(n == 0)
+        return 1;
+    int temp = printPower(x, n/2);
+    temp *= temp;
+    if(n % 2 ==0){
+        return temp;
+    }else{
+        return temp*x;
+    }
+}
+int main(){
+    int n = 5;
+    int x = 3;
+    cout<< printPower(x,n);
+    return 0;
+}
+
+>>>>>>>>>>
+tc = theta(log n), aux space (theta (log n))
+
+
+
+
+=================================================================(Iterative solution for computing Power) <Binary exponentiation)>
+
+
+/**
+ * @file test.cpp
+ * @author Bishal kumar
+ * @brief efficient itterative method to find the squares of large numbers
+ * @version 0.1
+ * @date 2021-11-08
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+
+
+#include <iostream>
+using namespace std;
+int printSquare(int x, int n)
+{
+    int res = 1;
+    while (n > 0)
+    {
+        if (n % 2 != 0)
+        {
+            res *= x;
+        }
+        x *= x;
+        n /= 2;  //because we are considering binary of n and we multiply x to res only when we see 1 at binary n
+    }
+    return res;
+}
+int main()
+{
+    int n = 5;
+    int x = 3;
+    cout << printSquare(x, n);
+    return 0;
+}
+>>>>>>>>>>>>>>>
+PS C:\Users\215073\OneDrive\Desktop\CP\c++\test> & .\"test.exe"
+243
+Time complexity is BigO of (logn) and aux space complexity is O(1)
+
+-------------------------------------------------------------------------------------------------(alternate method) more optimized by using bitwise operator
+ 
+
+/**
+ * @file test.cpp
+ * @author Bishal kumar
+ * @brief efficient itterative method to find the squares of large numbers
+ * @version 0.1
+ * @date 2021-11-08
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+#include <iostream>
+using namespace std;
+int printSquare(int x, int n)
+{
+    int res = 1;
+    while (n > 0)
+    {
+        if (n & 1) // used to check weather n is odd or not, if n is odd, then last bit should be 1
+        // and if last bit is one then on bitwise and with '1', it won't be equal to 0, hence loop execution will occurs.
+        // and if last bit is 0, output will be 0, which means false, and loop won't execute.
+        {
+            res *= x;
+        }
+        x *= x;
+        n = n >> 1;  //because we are considering binary of n and we multiply x to res only when we see 1 at binary n
+    }
+    return res;
+}
+int main()
+{
+    int n = 5;
+    int x = 3;
+    cout << printSquare(x, n);
+    return 0;
+}
+===========================================================================================================================
