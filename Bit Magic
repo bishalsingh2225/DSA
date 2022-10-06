@@ -1,0 +1,292 @@
+================================================(Check kth bth is set or not)
+-------------------------------------(my way (using right shift))
+#include<iostream>
+using namespace std;
+bool checkSet(int n, int k){
+    n = n >> k;
+    if(n %2 != 0){
+        return true;
+    }
+    return false;
+}
+int main(){
+    int n = 5;
+    int k = 2;
+    if(checkSet(n,k-1)){
+        cout<<"yes";
+    }else{
+        cout<<"no";
+    }
+   
+    return 0;
+}
+>>>>>>>>>>
+after doing right shift 
+there are other ways too for checking last bit is 1 or not, one can bitwise and it with (1); if != 0 then true else false.
+-------------------------------------------(using left shift)
+//using left shift
+//using left shift
+#include<iostream>
+using namespace std;
+bool checkSet(int n, int k){
+    if(((1<<k)&n) != 0){
+        cout<<"yes";
+    }
+    else{
+        cout<<"no";
+    } return NULL;
+}
+int main(){
+    int n = 5;
+    int k = 4;
+    checkSet(n,k-1);
+    return 0;
+}
+--------------------------------------------------------------------------------- small code using right shift
+#include <iostream>
+using namespace std;
+bool check(int x, int n)
+{
+    return ((x >> n) & 1 != 0);
+}
+int main()
+{
+    int n = 2;
+    int x = 5;
+    cout<< check(x, --n);
+    return 0;
+}
+========================================================(counting set bits)
+-------------------------------------------------(Naiv solution)
+//using left shift couting set bits
+#include<iostream>
+using namespace std;
+
+int checkSet(int n){
+    int count = 0;
+    for(int k = 1; k<=n; k++){     // here k determines the number of shift of 1 will occur
+        if(((1<<(k-1))&n) != 0){
+            count++;
+        }
+    }    
+    return count;
+}
+int main(){
+    int n = 13;
+    cout<< checkSet(n);
+    return 0;
+}
+>>>>>>>>>>>>>>>>>
+
+
+------------------------------------------------//using right shift for counting set bits <here while loop will be an efficient solution>
+#include<iostream>
+using namespace std;
+int checkSet(int n){
+    int count = 0;
+    for(int k = 1; k<=n; k++){    
+        if(((n>>(k-1))&1) != 0){  //one can also check if the number is odd if yes then yes else no
+            count++;
+        }
+    }    
+    return count;
+}
+int main(){
+    int n = 13;
+    cout<< checkSet(n);
+    return 0;
+}
+
+>>>>>>>>>>>>
+theta(total bits in n)
+---------------------------------------------------------------------------------------------(Brian and Kerningham Algorithm)
+
+// states :
+// n&(n-1) will switch off the last bit in n
+
+#include <bits/stdc++.h> 
+using namespace std; 
+unsigned int countSetBits(int n) 
+{ 
+       unsigned int count = 0; 
+       while (n) { 
+          n &= (n - 1); 
+          count++; 
+       } 
+      return count; 
+} 
+int main() 
+{ 
+    int i = 9; 
+    cout << countSetBits(i); 
+    return 0; 
+} 
+>>>>>>>>>>>>>
+theta (number of set bits in the number)
+------------------------------------------(lookup table method) >> here table is presumed to be pre-processed
+
+//lookup table method for finding set bits
+#include<iostream>
+using namespace std;
+int arr[256];
+void initialize(){
+    arr[0] = 0; //
+    cout << arr[0];
+    for (int i = 1; i < 256; i++){
+        arr[i] = (i & 1) + arr[i/2];
+        cout << arr[i] <<" ";
+    }
+}
+int lookUp(int n){
+    int count = 0;
+    //for 32 bit numbers
+    for (int i = 0; i < 4;i++){
+        count += arr[n & 0xff]; //gives the value of last 8 bits to the array, and outputs the set bits it has.
+        n = n >> 8;
+    }
+        return count;
+}
+int main(){
+    initialize();
+    int n = 15;
+    cout<<"\n"<<lookUp(n);
+    return 0;
+}
+>>>>>>>>>>>>
+If the initialize function is preprocessed then the look up time or time complexity will be O(1).
+============================================================(Power of 2)
+--------------------------------// my method (naive solution)
+#include <bits/stdc++.h> 
+using namespace std; 
+void check(int n){
+    if(n == 0){cout<<"no";
+    return ;}
+    while(n != 1){
+        if(n%2 != 0){cout<<"no"; 
+        return ;}
+        n/=2;
+    }
+    cout<<"yes";
+    return ;
+}
+int main() 
+{ 
+    int n = 4;
+    check(n);
+    return 0; 
+} 
+
+>>>>>>>>>>
+theta(logn)
+--------------------------------// power of 2 have only one set bit. so unset the number and now if it is zero then the number is power of two else not.
+
+#include<iostream>
+using namespace std;
+bool isPower(int n){
+    if(n == 0){return false;}
+    n = n&(n-1);
+    if(n == 0){
+        return true;
+    }else {
+        return false;
+    }
+}
+int main(){
+    int n = 30;
+    cout<<isPower(n);
+    return 0;
+}
+>>>>>>>>
+theta(1)
+
+
+=====================================================(Find only odd occuring numbers)
+---------------//naiv solution (O(n^2))
+-------------------------------------------//Efficient solution using XOR
+#include<iostream>
+using namespace std;
+
+int isOdd(int *n,int s){
+    int res = 0;
+    for(int i = 0; i<s; i++){
+        res =   res ^ n[i];
+    }
+    return res;
+}
+int main(){
+    int n[] = {4, 3, 4, 4, 4, 5, 5, 3, 3};
+    int s = 9;
+    cout<<isOdd(n,9);
+    return 0;
+}
+>>>>>>>>>>>
+time complexity(theta(n)), space complexity (theta(n)), Aux complixity(theta(1))
+
+-------------------------------------------------------// (Find the missing number)
+XOR(1, max value in array) ^ XOR(arr[0],arr[n-1]);
+this will output the one missing number.
+]
+===========================================================(Two odd occuring numbers)
+----------------------------------------------//naiv solution in copy
+----------------------------------------------//efficient solution
+//finding 2 odds
+#include<iostream>
+using namespace std;
+void findOdds(int arr[], int len){
+    int res = 0;
+    for(int i =0; i<len; i++){
+        res = res ^ arr[i];
+    }
+
+//finding the position of first set bit from right in res, <we know 2 numbers aren't same res != 0 (there will be at least 1 set bit); so finding a number with only the last //set bit>
+    int pos = res & ~(res-1); //this provides a number with only one set bit and 0s on its either sides.
+    int res1=0;
+    int res2 = 0;
+//seperating res1 and res2 from the arr[]
+    for (int i = 0; i < len; i++) 
+        { 
+            if ((arr[i] & pos) != 0){ 
+                res1 = res1 ^ arr[i]; 
+            }
+            else{
+                res2 = res2 ^ arr[i]; 
+                }
+        }        
+        cout <<  res1 << " " << res2;
+
+}
+
+int main(){
+    int arr[] = {2,2,3,5,5,6,2,2};
+    int len = sizeof(arr)/4;
+    findOdds(arr,len);
+    return 0;
+}
+>>>>>>>>>>>>>>>>>
+Time complexity: O(n)
+space complexity: Theta(n)
+Aux space complixity: 0
+==================================================================(Powerset using bitwise operators)
+--------------------------------//efficient code(for explanation check copy)
+#include<iostream>
+#include<cmath>
+
+using namespace std;
+void printPowerSet(string st){
+    int n = st.length();
+    int prob = pow(2,n);
+    for(int i = 0; i<prob; i++){
+        for(int j = 0;j<n;j++){
+            if((i &(1<<j)) != 0){
+                cout<<st[j];
+            }
+        }
+        cout<<endl;
+    }
+}
+int main(){
+    string st = "abc";
+    printPowerSet(st);
+    return 0;
+}
+>>>>>>>>>>>>>>>>>>>
