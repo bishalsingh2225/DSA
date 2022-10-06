@@ -1,0 +1,342 @@
+------------------------------------>> Palindrome check using Reccursive call
+#include<iostream>
+using namespace std;
+bool isPalindrome(string &s, int start, int end){           //here the string is passed by reference <just for info>
+    // if(start +1 == end || start == end ){
+    //     if(s[start] == s[end]){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }
+    if(start>= end){
+        return true;
+    }
+    // if(s[start] == s[end] ){
+    //     return isPalindrome(s, start+1, end-1);
+    // }else{
+    //     return false;
+    // }
+    return (s[start] == s[end]) && isPalindrome(s,start+1,end-1);
+}
+int main(){
+    string s = "maccbm";
+    int start = 0;
+    int end = s.length() -1;
+    cout<<isPalindrome(s,start,end);
+    return 0;
+}
+
+>>>>>>>>>>>>
+Time Complexity = O(n)
+Aux space = O(n)
+
+---------------------------------------->> Sum of digits using reccursion
+
+#include<iostream>
+using namespace std;
+int sum(int n){
+    // if(n == 0){
+    //     return 0;
+    // }
+    if(n <= 9){
+        return n;
+    }
+    return n % 10+ sum(n/10);
+}
+int main(){
+    int n = 143;
+    cout<<sum(n);
+    return 0;
+}
+
+>>>>>>>>>>>
+// d is the number of digits in the number
+Time Complexity = Theta(d)
+Aux space = Theta(d)
+
+
+-------------------------------------------------------------->> Rope Cutting problem
+
+//rope cutting problem
+#include <iostream>
+using namespace std;
+int ropeCut(int n, int a, int b, int c){
+    if (n == 0) return 0;
+    if (n < 0) return -1;
+int res = max(ropeCut(n-a, a, b, c), max(ropeCut(n-b, a, b, c), ropeCut(n-c, a, b, c)));
+    if (res == -1){
+        return -1;
+    }
+    return res+1;
+}
+int main(){
+    int n = 23;
+    int a = 11;
+    int b = 12;
+    int c = 5;
+    cout<<ropeCut(n,a,b,c);
+}
+>>>>>>>>..
+
+
+-------------------------------------------------------------->> Generate Subset
+
+
+// generate subset
+#include<iostream>
+using namespace std;
+void genSubs(string st,string ch, int counter){
+    if(counter == st.length()){
+        cout<<ch<<" ";
+        return;                         ---> This return is important
+    }
+    genSubs(st, ch, counter+1);
+    genSubs(st, ch+st[counter], counter+1);
+}
+int main(){
+    string st = "abc";
+    genSubs(st,"",0);
+    return 0;
+}
+
+>>>>>>>>>>>>>.
+
+
+
+-------------------------------------------------------------->> Tower of Hanoi
+
+//Tower of hanoi
+#include <iostream>
+using namespace std;
+void ToH(int n, char A, char B, char C) 
+{ 
+    if (n == 1) 
+    { 
+        cout<<"Move 1 from " <<  A << " to " << C << endl; 
+        return; 
+    } 
+    ToH(n-1, A, C, B); 
+    cout<<"Move " << n << " from " <<  A << " to " << C << endl; 
+    ToH(n-1, B, A, C); 
+}
+    
+int main() {
+    
+    int n = 3; 
+    
+    ToH(n, 'A', 'B', 'C'); 
+    
+    return 0;
+}
+>>>>>>>>>>>>>>>
+
+
+-------------------------------------------------------------->> Josephus Problem
+
+//Josephus Problem
+#include <iostream>
+using namespace std;
+int jos(int n, int k){
+    if (n ==1){
+        return 0;
+    }else{
+        return (jos(n-1,k)+k)%n;
+    }
+}
+int main(){
+    cout<<jos(4,2);
+    return 0;
+}
+
+
+-------------------------------------------------------------->> Subset sum Problem
+
+
+
+#include <iostream>
+#include <limits.h>
+using namespace std;
+int countSubsets(int arr[], int n, int sum)                     here we are not maintaining the subsets, we are just maintaining the sum
+{
+    if(n==0)
+        return sum==0? 1 : 0;
+    return countSubsets(arr, n-1, sum) + countSubsets(arr, n-1, sum - arr[n-1]);
+}
+
+int main() {
+    
+        int n = 3, arr[]= {10, 20, 15}, sum = 25;
+        
+        cout<<countSubsets(arr, n, sum);
+        
+        return 0;
+}
+
+
+=============================
+Time complexity theta(2^n)
+
+-------------------------------------------------------------->> Print all permutations
+
+===============================================================================================Problems section
+
+Question number 7: (Josephus problem using 1 as starting point)
+
+// { Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+ // } Driver Code Ends
+/*You are required to complete this method */
+class Solution
+{
+    public:
+    int helper(int n, int k){
+        if(n==1){
+           return 0;
+       }
+       return ((helper(n-1,k)+k)%n);
+    }
+    int josephus(int n, int k)
+    {
+        int a = helper(n,k);
+        return a+1;
+    }
+};
+// { Driver Code Starts.
+int main() {
+    
+    int t;
+    cin>>t;//testcases
+    while(t--)
+    {
+        int n,k;
+        cin>>n>>k;//taking input n and k
+        
+        //calling josephus() function
+        Solution ob;
+        cout<<ob.josephus(n,k)<<endl;
+    }
+    return 0;
+}  // } Driver Code Ends
+>>>>>>>>>>>>>
+
+---------------------------------------------------------------
+	10. Power of numbers:
+	// { Driver Code Starts
+	#include <bits/stdc++.h>
+	using namespace std;
+	# define mod 1000000007
+	
+	 // } Driver Code Ends
+	class Solution{
+	    public:
+	    //You need to complete this fucntion
+	  long long power(int n,int R)
+	   {
+	     long long res=1,N=n;
+	      if(N==0)
+	      return 0;
+	      if(R==0)
+	         return 1;
+	      while(R>0){
+	          if(R&1)
+	          res=(res*N)%mod;
+	          R=R>>1;
+	          N=(N*N)%mod;
+	      }
+	      return res%mod;
+	   }
+	
+	};
+	
+	// { Driver Code Starts.
+	
+	// compute reverse of a number 
+	long long rev(long long n)
+	{
+	    long long rev_num = 0;
+	     while(n > 0) 
+	      { 
+	        rev_num = rev_num*10 + n%10; 
+	        n = n/10; 
+	      } 
+	      return rev_num;
+	}
+	
+	
+	
+	
+	int main()
+	{
+	    int T;
+	    cin>>T;//testcases
+	    
+	    while(T--)
+	    {
+	        long long N;
+	        cin>>N;//input N
+	        
+	        long long R = 0; 
+	        
+	        // reverse the given number n
+	        R = rev(N);
+	        Solution ob;
+	        //power of the number to it's reverse
+	        long long ans =ob.power(N,R);
+	        cout << ans<<endl;
+	    }
+	}  // } Driver Code Ends
+
+---------------------------------------------------------------question number 11
+
+// CPP program to generate power set
+#include <bits/stdc++.h>
+using namespace std;
+vector<string> vect;
+void addSubsets(string s, string ch, int len){
+    if(len == s.length()){
+        vect.push_back(ch);
+        return;
+    }
+    addSubsets(s,ch,len+1);
+    addSubsets(s, ch+s[len],len+1);
+}
+vector <string> powerSet(string s)
+{
+    string ch = "";
+    addSubsets(s,ch, 0); 
+    return vect;
+}
+
+// { Driver Code Starts.
+
+// Driver code
+int main()
+{
+    int T;
+    cin>>T;//testcases
+    while(T--)
+    {
+        string s;
+        cin>>s;//input string
+        
+        //calling powerSet() function
+        vector<string> ans = powerSet(s);
+        
+        //sorting the result of the powerSet() function
+        sort(ans.begin(),ans.end());
+        
+        //printing the result
+        for(auto x:ans)
+        cout<<x<<" ";
+        cout<<endl;
+        
+        
+    }
+return 0;
+}   // } Driver Code Ends
+
+-------------------------------------------------------------
+	
+
