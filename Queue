@@ -3,7 +3,17 @@
 		○ For synchronization
 	
 ================================================================ Implementing Queue using an Array
-	
+================================================================ In Java
+import java.util.*;
+class Program1{
+public static void main(String []args){
+Deque <Integer> dl= new LinkedList<Integer>();
+dl.add(1);
+dl.addFirst(2);
+
+}
+}
+================================================================ In C++
 	#include<iostream>
 	using namespace std;
 	struct Queue{
