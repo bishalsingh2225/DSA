@@ -1,25 +1,40 @@
-================================================(Check kth bth is set or not)
--------------------------------------(my way (using right shift))
+================================================
+==================================================================
+class program{
+public static void main(String []args){
+int a=4, b=5;
+ a=a+b;
+ b=a-b;
+ a=a-b;
+ System.out.println("Before swapping: "+ a+" "+b);
+ System.out.println("After swapping: "+ a+" "+b);
+}
+}
+(Powerset using bitwise operators)
+--------------------------------//efficient code(for explanation check copy)
 #include<iostream>
+#include<cmath>
+
 using namespace std;
-bool checkSet(int n, int k){
-    n = n >> k;
-    if(n %2 != 0){
-        return true;
+void printPowerSet(string st){
+    int n = st.length();
+    int prob = pow(2,n);
+    for(int i = 0; i<prob; i++){
+        for(int j = 0;j<n;j++){
+            if((i &(1<<j)) != 0){
+                cout<<st[j];
+            }
+        }
+        cout<<endl;
     }
-    return false;
 }
 int main(){
-    int n = 5;
-    int k = 2;
-    if(checkSet(n,k-1)){
-        cout<<"yes";
-    }else{
-        cout<<"no";
-    }
-   
+    string st = "abc";
+    printPowerSet(st);
     return 0;
 }
+(Check kth bth is set or not)
+-------------------------------------
 >>>>>>>>>>
 after doing right shift 
 there are other ways too for checking last bit is 1 or not, one can bitwise and it with (1); if != 0 then true else false.
@@ -137,21 +152,7 @@ void initialize(){
         cout << arr[i] <<" ";
     }
 }
-int lookUp(int n){
-    int count = 0;
-    //for 32 bit numbers
-    for (int i = 0; i < 4;i++){
-        count += arr[n & 0xff]; //gives the value of last 8 bits to the array, and outputs the set bits it has.
-        n = n >> 8;
-    }
-        return count;
-}
-int main(){
-    initialize();
-    int n = 15;
-    cout<<"\n"<<lookUp(n);
-    return 0;
-}
+
 >>>>>>>>>>>>
 If the initialize function is preprocessed then the look up time or time complexity will be O(1).
 ============================================================(Power of 2)
@@ -266,27 +267,5 @@ int main(){
 Time complexity: O(n)
 space complexity: Theta(n)
 Aux space complixity: 0
-==================================================================(Powerset using bitwise operators)
---------------------------------//efficient code(for explanation check copy)
-#include<iostream>
-#include<cmath>
 
-using namespace std;
-void printPowerSet(string st){
-    int n = st.length();
-    int prob = pow(2,n);
-    for(int i = 0; i<prob; i++){
-        for(int j = 0;j<n;j++){
-            if((i &(1<<j)) != 0){
-                cout<<st[j];
-            }
-        }
-        cout<<endl;
-    }
-}
-int main(){
-    string st = "abc";
-    printPowerSet(st);
-    return 0;
-}
 >>>>>>>>>>>>>>>>>>>
