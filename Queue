@@ -119,3 +119,20 @@ The Queue is Empty
 The size of the Queue is 0
 	
 Here all the operations except dequeue() operation, takes big o(1) time. 
+================================================================ In Python
+queue = []
+  
+queue.append('a')
+queue.append('b')
+queue.append('c')
+  
+print("Initial queue")
+print(queue)
+  
+print("\nElements dequeued from queue")
+print(queue.pop(0))
+print(queue.pop(0))
+print(queue.pop(0))
+  
+print("\nQueue after removing elements")
+print(queue)
